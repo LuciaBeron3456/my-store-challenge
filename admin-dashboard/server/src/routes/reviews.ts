@@ -10,11 +10,12 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     const { product_id } = req.query
 
-    if (!product_id) {
-      throw new Error("product_id is mandatory")
+    let url = `${MEDUSA_URL}/api/review`
+    if (product_id) {
+      url += `?product_id=${product_id}`
     }
 
-    const response = await fetch(`${MEDUSA_URL}/api/review?product_id=${product_id}`);
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Review not found")
